@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D2DAFF"
+    tools:context=".TranslatorActivity">
+
+    <FrameLayout
+        android:id="@+id/preview_display_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="550dp"
+        android:layout_weight="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/no_camera_access_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:text="No camera access" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/backToMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_marginBottom="16dp"
+
+        android:background="@drawable/button"
+        android:text="กลับสู่เมนู"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textTranslation"
+        android:layout_width="300dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/boxtext"
+
+        android:outlineSpotShadowColor="@color/black"
+        android:text="ไม่พบบุคคลภายในกล้อง"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:paddingTop="10px"
+
+        app:layout_constraintBottom_toTopOf="@+id/backToMenu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/preview_display_layout"
+        app:layout_constraintVertical_bias="0.347" />
+
+    <!--    <View-->
+<!--        android:id="@+id/view"-->
+<!--        android:layout_width="386dp"-->
+<!--        android:layout_height="54dp"-->
+<!--        android:background="@drawable/boxtext"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/preview_display_layout"-->
+<!--        tools:layout_editor_absoluteX="30dp" -->
+<!--        />-->
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
