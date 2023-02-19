@@ -15,6 +15,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button next = (Button)findViewById(R.id.guideline);
+        final LoadingDialog loadingDialog = new LoadingDialog(MenuActivity.this);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -27,6 +28,7 @@ public class MenuActivity extends AppCompatActivity {
         cam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                loadingDialog.startLoadingDialog();
                 Intent i = new Intent(MenuActivity.this, PredictionActivity.class);
                 startActivity(i);
             }
