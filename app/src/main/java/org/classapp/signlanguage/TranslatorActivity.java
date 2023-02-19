@@ -45,7 +45,7 @@ public class TranslatorActivity extends AppCompatActivity {
     // top-left corner.
     // NOTE: use "flipFramesVertically" in manifest metadata to override this behavior.
     private static final boolean FLIP_FRAMES_VERTICALLY = true;
-
+    // Hello
     static {
         // Load all native libraries needed by the app.
         System.loadLibrary("mediapipe_jni");
