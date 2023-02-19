@@ -13,7 +13,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
         Button next = (Button)findViewById(R.id.btstart);
-        //GG
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

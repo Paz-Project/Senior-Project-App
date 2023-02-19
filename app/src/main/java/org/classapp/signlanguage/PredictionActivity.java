@@ -16,6 +16,7 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class PredictionActivity extends TranslatorActivity {
 
@@ -24,7 +25,7 @@ public class PredictionActivity extends TranslatorActivity {
     private LandmarkProto.LandmarkList leftHandLandmarksTmp;
     private LandmarkProto.LandmarkList faceLandmarksTmp;
 
-    private PyObject predictionModule;
+    public static PyObject predictionModule;
 
     private List<List<Double>> frameList = new ArrayList<>();
 
@@ -41,7 +42,7 @@ public class PredictionActivity extends TranslatorActivity {
 
         Python py = Python.getInstance();
 
-        this.predictionModule = py.getModule("prediction");
+        new Task("prediction").execute(py);
 
         TextView textTranslation = findViewById(R.id.textTranslation);
 

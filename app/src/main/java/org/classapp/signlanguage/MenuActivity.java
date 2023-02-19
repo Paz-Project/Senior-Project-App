@@ -28,7 +28,6 @@ public class MenuActivity extends AppCompatActivity {
         cam.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadingDialog.startLoadingDialog();
                 Intent i = new Intent(MenuActivity.this, PredictionActivity.class);
                 startActivity(i);
             }
