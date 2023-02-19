@@ -34,6 +34,7 @@ public class PredictionActivity extends TranslatorActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         if (! Python.isStarted()) {
             Python.start(new AndroidPlatform(this));
         }
@@ -146,5 +147,10 @@ public class PredictionActivity extends TranslatorActivity {
                         e.printStackTrace();
                     }
                 }));
+
+    }
+    @Override
+    public void onBackPressed() {
+
     }
 }

@@ -34,4 +34,8 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+
+    }
 }
