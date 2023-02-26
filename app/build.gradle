@@ -1,17 +1,10 @@
 plugins {
     id 'com.android.application'
-    id 'com.chaquo.python'
 }
 
 android {
     namespace 'org.classapp.signlanguage'
     compileSdk 32
-
-    sourceSets {
-        main {
-            python.srcDir "src/main/python"
-        }
-    }
 
     defaultConfig {
         applicationId "org.classapp.signlanguage"
@@ -21,23 +14,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        // Chaquopy setup
-        ndk {
-            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
-        }
-        python {
-            version "3.8"
-            buildPython "C:/Users/Asus/AppData/Local/Programs/Python/Python38/python.exe"
-
-            // pip install
-            pip {
-                install "numpy"
-                install "tensorflow==2.1"
-                install "scikit-learn"
-                install "keras==2.3.1"
-            }
-        }
     }
 
     buildTypes {
@@ -46,12 +22,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     buildFeatures {
         viewBinding true
+        mlModelBinding true
     }
 }
 
@@ -62,6 +41,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
+    implementation 'org.tensorflow:tensorflow-lite-support:0.1.0'
+    implementation 'org.tensorflow:tensorflow-lite-metadata:0.1.0'
+    implementation 'org.tensorflow:tensorflow-lite-gpu:2.3.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'

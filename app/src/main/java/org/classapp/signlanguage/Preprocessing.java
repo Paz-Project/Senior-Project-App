@@ -2,17 +2,15 @@ package org.classapp.signlanguage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.OptionalDouble;
 
-import com.chaquo.python.PyObject;
 import com.google.mediapipe.formats.proto.LandmarkProto;
 
 public class Preprocessing {
 
     public static Integer SEQUENCE_LENGTH = 16;
+    public static Integer FEATURE_LENGTH = 68;
+    public static Integer ARR_LENGTH = SEQUENCE_LENGTH * FEATURE_LENGTH;
 
     private static List<List<Integer>> jointHandList = new ArrayList<>();
     private static List<List<Integer>> jointPoseLeftList = new ArrayList<>();
@@ -67,7 +65,7 @@ public class Preprocessing {
         jointPoseRightList.add(Arrays.asList(new Integer[] {20,16,14}));
     }
 
-    private static Double calculateAngle(List<Double> landmarkA, List<Double> landmarkB, List<Double> landmarkC) {
+    private static Float calculateAngle(List<Double> landmarkA, List<Double> landmarkB, List<Double> landmarkC) {
         Double radians = Math.atan2(landmarkC.get(1) - landmarkB.get(1), landmarkC.get(0) - landmarkB.get(0)) - Math.atan2(landmarkA.get(1) - landmarkB.get(1), landmarkA.get(0) - landmarkB.get(0));
         Double angle = Math.abs( (radians * 180.0) / Math.PI );
 
@@ -75,19 +73,19 @@ public class Preprocessing {
             angle = 360 - angle;
         }
 
-        return angle;
+        return (float) (angle / 180.0);
     }
 
-    public static List<Double> extractAngles(LandmarkProto.LandmarkList poseLandmarks,
-                                             LandmarkProto.LandmarkList leftHandLandmarks,
-                                             LandmarkProto.LandmarkList rightHandLandmarks) {
-        List<Double> angleList = new ArrayList<>();
+    public static List<Float> extractAngles(LandmarkProto.LandmarkList poseLandmarks,
+                                            LandmarkProto.LandmarkList leftHandLandmarks,
+                                            LandmarkProto.LandmarkList rightHandLandmarks) {
+        List<Float> angleList = new ArrayList<>();
 
-        List<Double> angleLeftList = new ArrayList<>();
-        List<Double> angleRightList = new ArrayList<>();
+        List<Float> angleLeftList = new ArrayList<>();
+        List<Float> angleRightList = new ArrayList<>();
 
-        List<Double> anglePoseLeftList = new ArrayList<>();
-        List<Double> anglePoseRightList = new ArrayList<>();
+        List<Float> anglePoseLeftList = new ArrayList<>();
+        List<Float> anglePoseRightList = new ArrayList<>();
 
         if (leftHandLandmarks != null) {
 
@@ -109,7 +107,6 @@ public class Preprocessing {
                 landmarkC.add((double)leftHandLandmarks.getLandmark(joint.get(2)).getZ());
 
                 angleLeftList.add(calculateAngle(landmarkA, landmarkB, landmarkC));
-//                angleLeftList.add(preprocessingModule.callAttr("calculate_angles", landmarkA.toArray(), landmarkB.toArray(), landmarkC.toArray()).toDouble());
             }
 
             // คำนวณ angle ของแขนซ้าย
@@ -130,16 +127,15 @@ public class Preprocessing {
                 landmarkC.add((double)poseLandmarks.getLandmark(joint.get(2)).getZ());
 
                 anglePoseLeftList.add(calculateAngle(landmarkA, landmarkB, landmarkC));
-//                anglePoseLeftList.add(preprocessingModule.callAttr("calculate_angles", landmarkA.toArray(), landmarkB.toArray(), landmarkC.toArray()).toDouble());
             }
 
         }else {
-            Double[] zeroAnglesLeft = new Double[jointHandList.size()];
-            Arrays.fill(zeroAnglesLeft, 0.0);
+            Float[] zeroAnglesLeft = new Float[jointHandList.size()];
+            Arrays.fill(zeroAnglesLeft, 0.0f);
             angleLeftList = Arrays.asList(zeroAnglesLeft);
 
-            Double[] zeroAnglesPoseLeft = new Double[jointPoseLeftList.size()];
-            Arrays.fill(zeroAnglesPoseLeft, 0.0);
+            Float[] zeroAnglesPoseLeft = new Float[jointPoseLeftList.size()];
+            Arrays.fill(zeroAnglesPoseLeft, 0.0f);
             anglePoseLeftList = Arrays.asList(zeroAnglesPoseLeft);
         }
 
@@ -163,10 +159,6 @@ public class Preprocessing {
                 landmarkC.add((double)rightHandLandmarks.getLandmark(joint.get(2)).getZ());
 
                 angleRightList.add(calculateAngle(landmarkA, landmarkB, landmarkC));
-//                angleRightList.add(preprocessingModule.callAttr("calculate_angles", landmarkA.toArray(), landmarkB.toArray(), landmarkC.toArray()).toDouble());
-//                Double[] zeroAnglesRight = new Double[jointHandList.size()];
-//                Arrays.fill(zeroAnglesRight, 0.0);
-//                angleRightList = Arrays.asList(zeroAnglesRight);
             }
 
             // คำนวณ angle ของแขนขวา
@@ -187,19 +179,15 @@ public class Preprocessing {
                 landmarkC.add((double)poseLandmarks.getLandmark(joint.get(2)).getZ());
 
                 anglePoseRightList.add(calculateAngle(landmarkA, landmarkB, landmarkC));
-//                anglePoseRightList.add(preprocessingModule.callAttr("calculate_angles", landmarkA.toArray(), landmarkB.toArray(), landmarkC.toArray()).toDouble());
-//                Double[] zeroAnglesPoseRight = new Double[jointPoseRightList.size()];
-//                Arrays.fill(zeroAnglesPoseRight, 0.0);
-//                anglePoseRightList = Arrays.asList(zeroAnglesPoseRight);
             }
 
         }else {
-            Double[] zeroAnglesRight = new Double[jointHandList.size()];
-            Arrays.fill(zeroAnglesRight, 0.0);
+            Float[] zeroAnglesRight = new Float[jointHandList.size()];
+            Arrays.fill(zeroAnglesRight, 0.0f);
             angleRightList = Arrays.asList(zeroAnglesRight);
 
-            Double[] zeroAnglesPoseRight = new Double[jointPoseRightList.size()];
-            Arrays.fill(zeroAnglesPoseRight, 0.0);
+            Float[] zeroAnglesPoseRight = new Float[jointPoseRightList.size()];
+            Arrays.fill(zeroAnglesPoseRight, 0.0f);
             anglePoseRightList = Arrays.asList(zeroAnglesPoseRight);
         }
 
@@ -211,21 +199,21 @@ public class Preprocessing {
         return angleList;
     }
 
-    public static List<Double> extractForehandBackhand(LandmarkProto.LandmarkList leftHandLandmarks,
-                                                       LandmarkProto.LandmarkList rightHandLandmarks) {
-        List<Double> forehandBackHandList = new ArrayList<>();
+    public static List<Float> extractForehandBackhand(LandmarkProto.LandmarkList leftHandLandmarks,
+                                                      LandmarkProto.LandmarkList rightHandLandmarks) {
+        List<Float> forehandBackHandList = new ArrayList<>();
 
-        Double noLeftHand = 1.0;
-        Double forehandLeftHand = 0.0;
-        Double backhandLeftHand = 0.0;
+        Float noLeftHand = 1.0f;
+        Float forehandLeftHand = 0.0f;
+        Float backhandLeftHand = 0.0f;
 
-        Double noRightHand = 1.0;
-        Double forehandRightHand = 0.0;
-        Double backhandRightHand = 0.0;
+        Float noRightHand = 1.0f;
+        Float forehandRightHand = 0.0f;
+        Float backhandRightHand = 0.0f;
 
         // กรณีมือซ้าย
         if (leftHandLandmarks != null) {
-            noLeftHand = 0.0;
+            noLeftHand = 0.0f;
 
             LandmarkProto.Landmark leftThumb =  leftHandLandmarks.getLandmark(2);
             LandmarkProto.Landmark leftPinky = leftHandLandmarks.getLandmark(17);
@@ -233,48 +221,48 @@ public class Preprocessing {
 
             if (leftWrist.getY() > leftThumb.getY() && leftWrist.getY() > leftPinky.getY()) {
                 if (leftThumb.getX() < leftPinky.getX()) {
-                    forehandLeftHand = 1.0;
-                    backhandLeftHand = 0.0;
+                    forehandLeftHand = 1.0f;
+                    backhandLeftHand = 0.0f;
                 }else {
-                    backhandLeftHand = 1.0;
-                    forehandLeftHand = 0.0;
+                    backhandLeftHand = 1.0f;
+                    forehandLeftHand = 0.0f;
                 }
             } else if (leftWrist.getY() < leftThumb.getY() && leftWrist.getY() < leftPinky.getY()) {
                 if (leftThumb.getX() < leftPinky.getX()) {
-                    backhandLeftHand = 1.0;
-                    forehandLeftHand = 0.0;
+                    backhandLeftHand = 1.0f;
+                    forehandLeftHand = 0.0f;
                 }else {
-                    forehandLeftHand = 1.0;
-                    backhandLeftHand = 0.0;
+                    forehandLeftHand = 1.0f;
+                    backhandLeftHand = 0.0f;
                 }
             }else {
                 if (leftWrist.getX() > leftThumb.getX() && leftWrist.getX() > leftPinky.getX()) {
                     if (leftThumb.getY() > leftPinky.getY()) {
-                        forehandLeftHand = 1.0;
-                        backhandLeftHand = 0.0;
+                        forehandLeftHand = 1.0f;
+                        backhandLeftHand = 0.0f;
                     }else {
-                        backhandLeftHand = 1.0;
-                        forehandLeftHand = 0.0;
+                        backhandLeftHand = 1.0f;
+                        forehandLeftHand = 0.0f;
                     }
                 } else if (leftWrist.getX() < leftThumb.getX() && leftWrist.getX() < leftPinky.getX()) {
                     if (leftThumb.getY() < leftPinky.getY()) {
-                        forehandLeftHand = 1.0;
-                        backhandLeftHand = 0.0;
+                        forehandLeftHand = 1.0f;
+                        backhandLeftHand = 0.0f;
                     }else {
-                        backhandLeftHand = 1.0;
-                        forehandLeftHand = 0.0;
+                        backhandLeftHand = 1.0f;
+                        forehandLeftHand = 0.0f;
                     }
                 }
             }
         }else {
-            noLeftHand = 1.0;
-            forehandLeftHand = 0.0;
-            backhandLeftHand = 0.0;
+            noLeftHand = 1.0f;
+            forehandLeftHand = 0.0f;
+            backhandLeftHand = 0.0f;
         }
 
         // กรณีมือขวา
         if (rightHandLandmarks != null) {
-            noRightHand = 0.0;
+            noRightHand = 0.0f;
 
             LandmarkProto.Landmark rightThumb = rightHandLandmarks.getLandmark(2);
             LandmarkProto.Landmark rightPinky = rightHandLandmarks.getLandmark(17);
@@ -282,43 +270,43 @@ public class Preprocessing {
 
             if (rightWrist.getY() > rightThumb.getY() && rightWrist.getY() > rightPinky.getY()) {
                 if (rightThumb.getX() > rightPinky.getX()) {
-                    forehandRightHand = 1.0;
-                    backhandRightHand = 0.0;
+                    forehandRightHand = 1.0f;
+                    backhandRightHand = 0.0f;
                 }else {
-                    backhandRightHand = 1.0;
-                    forehandRightHand = 0.0;
+                    backhandRightHand = 1.0f;
+                    forehandRightHand = 0.0f;
                 }
             } else if (rightWrist.getY() < rightThumb.getY() && rightWrist.getY() < rightPinky.getY()) {
                 if (rightThumb.getX() > rightPinky.getX()) {
-                    backhandRightHand = 1.0;
-                    forehandRightHand = 0.0;
+                    backhandRightHand = 1.0f;
+                    forehandRightHand = 0.0f;
                 }else {
-                    forehandRightHand = 1.0;
-                    backhandRightHand = 0.0;
+                    forehandRightHand = 1.0f;
+                    backhandRightHand = 0.0f;
                 }
             }else {
                 if (rightWrist.getX() < rightThumb.getX() && rightWrist.getX() < rightPinky.getX()) {
                     if (rightThumb.getY() > rightPinky.getY()) {
-                        forehandRightHand = 1.0;
-                        backhandRightHand = 0.0;
+                        forehandRightHand = 1.0f;
+                        backhandRightHand = 0.0f;
                     }else {
-                        backhandRightHand = 1.0;
-                        forehandRightHand = 0.0;
+                        backhandRightHand = 1.0f;
+                        forehandRightHand = 0.0f;
                     }
                 } else if (rightWrist.getX() > rightThumb.getX() && rightWrist.getX() > rightPinky.getX()) {
                     if (rightThumb.getY() < rightPinky.getY()) {
-                        forehandRightHand = 1.0;
-                        backhandRightHand = 0.0;
+                        forehandRightHand = 1.0f;
+                        backhandRightHand = 0.0f;
                     }else {
-                        backhandRightHand = 1.0;
-                        forehandRightHand = 0.0;
+                        backhandRightHand = 1.0f;
+                        forehandRightHand = 0.0f;
                     }
                 }
             }
         }else {
-            noRightHand = 1.0;
-            forehandRightHand = 0.0;
-            backhandRightHand = 0.0;
+            noRightHand = 1.0f;
+            forehandRightHand = 0.0f;
+            backhandRightHand = 0.0f;
         }
 
         forehandBackHandList.add(noLeftHand);
@@ -332,27 +320,27 @@ public class Preprocessing {
         return forehandBackHandList;
     }
 
-    public static List<Double> extractHandPosition(LandmarkProto.LandmarkList poseLandmarks,
-                                                   LandmarkProto.LandmarkList faceLandmarks,
-                                                   LandmarkProto.LandmarkList leftHandLandmarks,
-                                                   LandmarkProto.LandmarkList rightHandLandmarks) {
-        List<Double> handPositionList = new ArrayList<>();
+    public static List<Float> extractHandPosition(LandmarkProto.LandmarkList poseLandmarks,
+                                                  LandmarkProto.LandmarkList faceLandmarks,
+                                                  LandmarkProto.LandmarkList leftHandLandmarks,
+                                                  LandmarkProto.LandmarkList rightHandLandmarks) {
+        List<Float> handPositionList = new ArrayList<>();
 
-        Double noLeftHandPose = 1.0;
-        Double inPosePositionLeft = 0.0;
-        Double outPosePositionLeft = 0.0;
+        Float noLeftHandPose = 1.0f;
+        Float inPosePositionLeft = 0.0f;
+        Float outPosePositionLeft = 0.0f;
 
-        Double noLeftHandFace = 1.0;
-        Double inFacePositionLeft = 0.0;
-        Double outFacePositionLeft = 0.0;
+        Float noLeftHandFace = 1.0f;
+        Float inFacePositionLeft = 0.0f;
+        Float outFacePositionLeft = 0.0f;
 
-        Double noRightHandPose = 1.0;
-        Double inPosePositionRight = 0.0;
-        Double outPosePositionRight = 0.0;
+        Float noRightHandPose = 1.0f;
+        Float inPosePositionRight = 0.0f;
+        Float outPosePositionRight = 0.0f;
 
-        Double noRightHandFace = 1.0;
-        Double inFacePositionRight = 0.0;
-        Double outFacePositionRight = 0.0;
+        Float noRightHandFace = 1.0f;
+        Float inFacePositionRight = 0.0f;
+        Float outFacePositionRight = 0.0f;
 
         if (poseLandmarks != null && faceLandmarks != null) {
             LandmarkProto.Landmark leftShoulderPose = poseLandmarks.getLandmark(11);
@@ -366,8 +354,8 @@ public class Preprocessing {
 
             // กรณีมือซ้าย
             if (leftHandLandmarks != null) {
-                noLeftHandPose = 0.0;
-                noLeftHandFace = 0.0;
+                noLeftHandPose = 0.0f;
+                noLeftHandFace = 0.0f;
 
                 LandmarkProto.Landmark middleFinger = leftHandLandmarks.getLandmark(9);
 
@@ -376,36 +364,36 @@ public class Preprocessing {
                         middleFinger.getX() < leftShoulderPose.getX() &&
                         (middleFinger.getY() > rightShoulderPose.getY() ||
                                 middleFinger.getY() > leftShoulderPose.getY())) {
-                    inPosePositionLeft = 1.0;
-                    outPosePositionLeft = 0.0;
+                    inPosePositionLeft = 1.0f;
+                    outPosePositionLeft = 0.0f;
                 }else {
-                    outPosePositionLeft = 1.0;
-                    inPosePositionLeft = 0.0;
+                    outPosePositionLeft = 1.0f;
+                    inPosePositionLeft = 0.0f;
                 }
 
                 // กรณีใบหน้า
                 if (middleFinger.getX() > faceMinX && middleFinger.getX() < faceMaxX &&
                         middleFinger.getY() > faceMinY && middleFinger.getY() < faceMaxY) {
-                    inFacePositionLeft = 1.0;
-                    outFacePositionLeft = 0.0;
+                    inFacePositionLeft = 1.0f;
+                    outFacePositionLeft = 0.0f;
                 }else {
-                    outFacePositionLeft = 1.0;
-                    inFacePositionLeft = 0.0;
+                    outFacePositionLeft = 1.0f;
+                    inFacePositionLeft = 0.0f;
                 }
             }else {
-                noLeftHandPose = 1.0;
-                inPosePositionLeft = 0.0;
-                outPosePositionLeft = 0.0;
+                noLeftHandPose = 1.0f;
+                inPosePositionLeft = 0.0f;
+                outPosePositionLeft = 0.0f;
 
-                noLeftHandFace = 1.0;
-                inFacePositionLeft = 0.0;
-                outFacePositionLeft = 0.0;
+                noLeftHandFace = 1.0f;
+                inFacePositionLeft = 0.0f;
+                outFacePositionLeft = 0.0f;
             }
 
             // กรณีมือขวา
             if (rightHandLandmarks != null) {
-                noRightHandPose = 0.0;
-                noRightHandFace = 0.0;
+                noRightHandPose = 0.0f;
+                noRightHandFace = 0.0f;
 
                 LandmarkProto.Landmark middleFinger = rightHandLandmarks.getLandmark(9);
 
@@ -414,30 +402,30 @@ public class Preprocessing {
                         middleFinger.getX() < leftShoulderPose.getX() &&
                         (middleFinger.getY() > rightShoulderPose.getY() ||
                                 middleFinger.getY() > leftShoulderPose.getY())) {
-                    inPosePositionRight = 1.0;
-                    outPosePositionRight = 0.0;
+                    inPosePositionRight = 1.0f;
+                    outPosePositionRight = 0.0f;
                 }else {
-                    outPosePositionRight = 1.0;
-                    inPosePositionRight = 0.0;
+                    outPosePositionRight = 1.0f;
+                    inPosePositionRight = 0.0f;
                 }
 
                 // กรณีใบหน้า
                 if (middleFinger.getX() > faceMinX && middleFinger.getX() < faceMaxX &&
                         middleFinger.getY() > faceMinY && middleFinger.getY() < faceMaxY) {
-                    inFacePositionRight = 1.0;
-                    outFacePositionRight = 0.0;
+                    inFacePositionRight = 1.0f;
+                    outFacePositionRight = 0.0f;
                 }else {
-                    outFacePositionRight = 1.0;
-                    inFacePositionRight = 0.0;
+                    outFacePositionRight = 1.0f;
+                    inFacePositionRight = 0.0f;
                 }
             }else {
-                noRightHandPose = 1.0;
-                inPosePositionRight = 0.0;
-                outPosePositionRight = 0.0;
+                noRightHandPose = 1.0f;
+                inPosePositionRight = 0.0f;
+                outPosePositionRight = 0.0f;
 
-                noRightHandFace = 1.0;
-                inFacePositionRight = 0.0;
-                outFacePositionRight = 0.0;
+                noRightHandFace = 1.0f;
+                inFacePositionRight = 0.0f;
+                outFacePositionRight = 0.0f;
             }
         }
 
