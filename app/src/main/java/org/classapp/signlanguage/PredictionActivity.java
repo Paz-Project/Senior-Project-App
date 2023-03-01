@@ -32,6 +32,9 @@ public class PredictionActivity extends TranslatorActivity {
 
     private final String[] classArr = {"ขอบคุณ", "ทำงาน", "ธุระ", "รัก", "สบายดี", "สวัสดี", "หิว", "เข้าใจ", "เสียใจ", "ไม่สบาย"};
 
+    private long startTime;
+    private long endTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,6 +94,7 @@ public class PredictionActivity extends TranslatorActivity {
 
                         if (textTranslation.getText().toString().trim().equals("ไม่พบบุคคลภายในกล้อง")) {
                             textTranslation.setText("ไม่ทราบท่าทาง");
+                            startTime = System.currentTimeMillis();
                         }
 
                         if (this.faceLandmarksTmp != null &&
@@ -128,6 +132,10 @@ public class PredictionActivity extends TranslatorActivity {
                                 textTranslation.setText(String.join("   ", this.translateList));
 
                                 this.concatFeatureList.clear();
+
+                                endTime = System.currentTimeMillis();
+                                Log.d("Process time::", String.valueOf( (endTime - startTime) / 1000.0 ));
+                                startTime = System.currentTimeMillis();
                             }
 
                             this.poseLandmarksTmp = null;
@@ -147,7 +155,7 @@ public class PredictionActivity extends TranslatorActivity {
         try {
             TslLstmModel model = TslLstmModel.newInstance(getApplicationContext());
 
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 16, 68}, DataType.FLOAT32);
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 10, 50}, DataType.FLOAT32);
             inputFeature0.loadArray(data);
 
             TslLstmModel.Outputs outputs = model.process(inputFeature0);

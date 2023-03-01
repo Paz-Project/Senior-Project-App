@@ -8,8 +8,8 @@ import com.google.mediapipe.formats.proto.LandmarkProto;
 
 public class Preprocessing {
 
-    public static Integer SEQUENCE_LENGTH = 16;
-    public static Integer FEATURE_LENGTH = 68;
+    public static Integer SEQUENCE_LENGTH = 10;
+    public static Integer FEATURE_LENGTH = 50;
     public static Integer ARR_LENGTH = SEQUENCE_LENGTH * FEATURE_LENGTH;
 
     private static List<List<Integer>> jointHandList = new ArrayList<>();
@@ -24,37 +24,37 @@ public class Preprocessing {
         // นิ้วโป้ง
         jointHandList.add(Arrays.asList(new Integer[] {4,3,2}));
         jointHandList.add(Arrays.asList(new Integer[] {3,2,1}));
-        jointHandList.add(Arrays.asList(new Integer[] {2,1,0}));
+//        jointHandList.add(Arrays.asList(new Integer[] {2,1,0}));
 
         // นิ้วชี้
         jointHandList.add(Arrays.asList(new Integer[] {8,7,6}));
         jointHandList.add(Arrays.asList(new Integer[] {7,6,5}));
         jointHandList.add(Arrays.asList(new Integer[] {6,5,0}));
-        jointHandList.add(Arrays.asList(new Integer[] {6,5,9}));
+//        jointHandList.add(Arrays.asList(new Integer[] {6,5,9}));
 
         // นิ้วกลาง
         jointHandList.add(Arrays.asList(new Integer[] {12,11,10}));
         jointHandList.add(Arrays.asList(new Integer[] {11,10,9}));
         jointHandList.add(Arrays.asList(new Integer[] {10,9,0}));
-        jointHandList.add(Arrays.asList(new Integer[] {10,9,5}));
-        jointHandList.add(Arrays.asList(new Integer[] {10,9,13}));
+//        jointHandList.add(Arrays.asList(new Integer[] {10,9,5}));
+//        jointHandList.add(Arrays.asList(new Integer[] {10,9,13}));
 
         // นิ้วนาง
         jointHandList.add(Arrays.asList(new Integer[] {16,15,14}));
         jointHandList.add(Arrays.asList(new Integer[] {15,14,13}));
         jointHandList.add(Arrays.asList(new Integer[] {14,13,0}));
-        jointHandList.add(Arrays.asList(new Integer[] {14,13,9}));
-        jointHandList.add(Arrays.asList(new Integer[] {14,13,17}));
+//        jointHandList.add(Arrays.asList(new Integer[] {14,13,9}));
+//        jointHandList.add(Arrays.asList(new Integer[] {14,13,17}));
 
         // นิ้วก้อย
         jointHandList.add(Arrays.asList(new Integer[] {20,19,18}));
         jointHandList.add(Arrays.asList(new Integer[] {19,18,17}));
         jointHandList.add(Arrays.asList(new Integer[] {18,17,0}));
-        jointHandList.add(Arrays.asList(new Integer[] {18,17,13}));
+//        jointHandList.add(Arrays.asList(new Integer[] {18,17,13}));
 
         // ข้อมือ
-        jointHandList.add(Arrays.asList(new Integer[] {1,0,5}));
-        jointHandList.add(Arrays.asList(new Integer[] {5,0,17}));
+//        jointHandList.add(Arrays.asList(new Integer[] {1,0,5}));
+//        jointHandList.add(Arrays.asList(new Integer[] {5,0,17}));
 
         // แขนซ้าย
         jointPoseLeftList.add(Arrays.asList(new Integer[] {15,13,11}));
