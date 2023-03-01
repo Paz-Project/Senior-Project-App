@@ -21,18 +21,6 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="244dp"
-        android:layout_height="322dp"
-        android:layout_marginBottom="72dp"
-        android:translationZ="100dp"
-        app:layout_constraintBottom_toTopOf="@+id/btstart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/first_page_img" />
-
 
     <Button
         android:id="@+id/btstart"
