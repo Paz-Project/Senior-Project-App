@@ -30,7 +30,7 @@ public class PredictionActivity extends TranslatorActivity {
 
     private List<String> translateList = new ArrayList<>();
 
-    private String[] classArr = {"ขอบคุณ", "ทำงาน", "ธุระ", "รัก", "สบายดี", "สวัสดี", "หิว", "เข้าใจ", "เสียใจ", "ไม่สบาย"};
+    private final String[] classArr = {"ขอบคุณ", "ทำงาน", "ธุระ", "รัก", "สบายดี", "สวัสดี", "หิว", "เข้าใจ", "เสียใจ", "ไม่สบาย"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
