@@ -10,8 +10,8 @@
 
     <FrameLayout
         android:id="@+id/preview_display_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="550dp"
+        android:layout_width="412dp"
+        android:layout_height="488dp"
         android:layout_weight="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +19,8 @@
 
         <TextView
             android:id="@+id/no_camera_access_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="485dp"
             android:gravity="center"
             android:text="No camera access" />
     </FrameLayout>
@@ -31,43 +31,41 @@
         android:layout_height="wrap_content"
 
 
-        android:layout_marginBottom="16dp"
-
+        android:layout_marginBottom="28dp"
         android:background="@drawable/button"
         android:text="กลับสู่เมนู"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textTranslation"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textTranslation"
         android:layout_width="300dp"
         android:layout_height="35dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
+
         android:background="@drawable/boxtext"
-
         android:outlineSpotShadowColor="@color/black"
-        android:text="ไม่พบบุคคลภายในกล้อง"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textAlignment="center"
         android:paddingTop="10px"
+        android:text="ไม่พบบุคคลภายในกล้อง"
+        android:textAlignment="center"
+        android:textColor="@color/black"
 
-        app:layout_constraintBottom_toTopOf="@+id/backToMenu"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/preview_display_layout"
-        app:layout_constraintVertical_bias="0.347" />
+        app:layout_constraintTop_toBottomOf="@+id/preview_display_layout" />
 
     <!--    <View-->
-<!--        android:id="@+id/view"-->
-<!--        android:layout_width="386dp"-->
-<!--        android:layout_height="54dp"-->
-<!--        android:background="@drawable/boxtext"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/preview_display_layout"-->
-<!--        tools:layout_editor_absoluteX="30dp" -->
-<!--        />-->
+    <!--        android:id="@+id/view"-->
+    <!--        android:layout_width="386dp"-->
+    <!--        android:layout_height="54dp"-->
+    <!--        android:background="@drawable/boxtext"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/preview_display_layout"-->
+    <!--        tools:layout_editor_absoluteX="30dp" -->
+    <!--        />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

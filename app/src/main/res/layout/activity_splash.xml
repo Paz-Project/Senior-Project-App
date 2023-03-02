@@ -24,7 +24,7 @@
         android:paddingTop="45dp"
         app:layout_constraintBottom_toBottomOf="@+id/sp_bg"
         app:layout_constraintEnd_toEndOf="@+id/appname"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="@+id/appname"
         app:srcCompat="@drawable/sp_img" />
 

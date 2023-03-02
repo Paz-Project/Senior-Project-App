@@ -8,20 +8,18 @@
     tools:context=".MenuActivity">
 
 
-
-
     <!-- Ellipse 2 -->
+
 
     <View
         android:id="@+id/rectangle_1"
-        android:layout_width="0dp"
+        android:layout_width="432dp"
         android:layout_height="129dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/rectangle_1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.285"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -35,10 +33,10 @@
         android:background="@drawable/ellipse_2"
         app:layout_constraintBottom_toBottomOf="@+id/rectangle_1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.889" />
+        app:layout_constraintVertical_bias="0.886" />
 
     <ImageButton
         android:id="@+id/cam"
@@ -46,49 +44,64 @@
         android:layout_height="85dp"
         android:background="@null"
         android:src="@drawable/camera"
-        app:layout_constraintBottom_toBottomOf="@+id/rectangle_1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/ellipse_2"
+        app:layout_constraintEnd_toEndOf="@+id/ellipse_2"
         app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.881" />
-
+        app:layout_constraintStart_toStartOf="@+id/ellipse_2"
+        app:layout_constraintTop_toTopOf="@+id/ellipse_2"
+        app:layout_constraintVertical_bias="0.4" />
 
     <Button
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginBottom="308dp"
+        android:layout_marginEnd="28dp"
 
         android:background="@drawable/button"
         android:elevation="4dp"
-
         android:text="วิธีการใช้งาน"
-        app:layout_constraintBottom_toBottomOf="@+id/rectangle_1"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.375"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.352" />
+        app:layout_constraintVertical_bias="0.531" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="89dp"
         android:layout_height="109dp"
-        android:layout_marginStart="48dp"
-        app:layout_constraintBottom_toBottomOf="@+id/rectangle_1"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.167"
+        app:layout_constraintVertical_bias="0.536"
         app:srcCompat="@drawable/infoicon" />
 
     <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="121dp"
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="@+id/imageView"
-        tools:layout_editor_absoluteY="348dp" />>
+        tools:layout_editor_absoluteY="348dp" />
+
+    <TextView
+        android:id="@+id/appname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/mali_semibold"
+        android:gravity="center"
+        android:outlineSpotShadowColor="@color/black"
+        android:text="Sign Language \nTranslator"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="@+id/rectangle_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.122" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
