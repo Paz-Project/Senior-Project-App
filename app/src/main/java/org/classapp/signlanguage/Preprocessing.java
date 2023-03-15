@@ -21,6 +21,10 @@ public class Preprocessing {
     }
 
     private static void setUpJointList() {
+        jointHandList.clear();
+        jointPoseLeftList.clear();
+        jointPoseRightList.clear();
+
         // นิ้วโป้ง
         jointHandList.add(Arrays.asList(new Integer[] {4,3,2}));
         jointHandList.add(Arrays.asList(new Integer[] {3,2,1}));

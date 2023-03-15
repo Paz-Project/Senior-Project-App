@@ -28,8 +28,6 @@ public class PredictionActivity extends TranslatorActivity {
 
     private List<Float> concatFeatureList = new ArrayList<>();
 
-    private List<String> translateList = new ArrayList<>();
-
     private final String[] classArr = {"ขอบคุณ", "ทำงาน", "ธุระ", "รัก", "สบายดี", "สวัสดี", "หิว", "เข้าใจ", "เสียใจ", "ไม่สบาย"};
 
     private long startTime;
@@ -116,10 +114,6 @@ public class PredictionActivity extends TranslatorActivity {
                             this.concatFeatureList.addAll(handPositionList);
 
                             if (this.concatFeatureList.size() == Preprocessing.ARR_LENGTH) {
-                                if (this.translateList.size() >= 3) {
-                                    this.translateList.clear();
-                                }
-
                                 // Convert Float[] -> float[]
                                 float[] frameArr = new float[this.concatFeatureList.size()];
                                 for (int index = 0; index < frameArr.length; index++) {
@@ -128,8 +122,7 @@ public class PredictionActivity extends TranslatorActivity {
 
                                 String translate = prediction(frameArr);
 
-                                this.translateList.add(translate);
-                                textTranslation.setText(String.join("   ", this.translateList));
+                                textTranslation.setText(translate);
 
                                 this.concatFeatureList.clear();
 
@@ -171,7 +164,7 @@ public class PredictionActivity extends TranslatorActivity {
                 }
             }
 
-            result = this.classArr[maxPos];
+            result = String.format("%s : %.2f", this.classArr[maxPos], maxConfidence);
 
             model.close();
         } catch (IOException e) {
