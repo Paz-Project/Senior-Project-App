@@ -164,7 +164,11 @@ public class PredictionActivity extends TranslatorActivity {
                 }
             }
 
-            result = String.format("%s : %.2f", this.classArr[maxPos], maxConfidence);
+            if (maxConfidence >= 0.7f) {
+                result = String.format("%s : %.2f", this.classArr[maxPos], maxConfidence);
+            }else {
+                result = "ไม่ทราบท่าทาง";
+            }
 
             model.close();
         } catch (IOException e) {
