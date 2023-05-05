@@ -63,7 +63,7 @@
             android:resource="@array/preloaded_fonts" />
         <meta-data
             android:name="cameraFacingFront"
-            android:value="true" />
+            android:value="false" />
         <meta-data
             android:name="binaryGraphName"
             android:value="holistic_tracking_gpu.binarypb" />
